@@ -56,4 +56,31 @@ where the first process is skiped and procss 2 will run its course.
 
  
 
+## Pipeline Parameters  
+It is simply declared by prepending to a variable name the prefix `params`, separted by dot character.  
+```
+params.str = 'Hello world!'
+```
+
+Its value can be specified on the command line by prefixing the parameter name with a `--paramName`  
+```
+nextflow run tutorial.nf --str 'Aubowan saha Suba Aluth Awruddak'  
+```
+
+which will give:  
+
+```
+N E X T F L O W  ~  version 21.10.6
+Launching `tutorial.nf` [focused_mahavira] - revision: b2372bc3c1
+executor >  local (7)
+[8b/2d87ec] process > splitLetters       [100%] 1 of 1 ✔
+[5d/28f456] process > convertToUpper (6) [100%] 6 of 6 ✔
+ahas n
+awobuA
+abuS
+htulA
+ddurwA
+ka
+``` 
+
 
