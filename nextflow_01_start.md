@@ -42,6 +42,16 @@ You can change one process and ru-run it by;
 nextflow run tutorial.nf -resume
 ```  
 
+```
+N E X T F L O W  ~  version 21.10.6
+Launching `tutorial.nf` [furious_davinci] - revision: b2372bc3c1
+executor >  local (2)
+[2f/14f303] process > splitLetters       [100%] 1 of 1, cached: 1 ✔
+[a5/1bdbdd] process > convertToUpper (2) [100%] 2 of 2 ✔
+olleH
+!dlrow
+``` 
+
 where the first process is skiped and procss 2 will run its course.  
 
  
