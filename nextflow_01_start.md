@@ -14,4 +14,36 @@ singularity/3.5.2
 ```  
 
 
+## Getting Started  
+
+### simple script  
+[tutorial.nf](documentation/tutorial.nf)
+
+Execute the script by entering the following command  
+```
+nextflow run tutorial.nf
+```  
+
+It will output something like:
+```
+N E X T F L O W  ~  version 21.10.6
+Launching `tutorial.nf` [festering_mayer] - revision: dfa326a346
+executor >  local (3)
+[91/a790dd] process > splitLetters       [100%] 1 of 1 ✔
+[d2/d9a4bc] process > convertToUpper (1) [100%] 2 of 2 ✔
+WORLD!
+HELLO
+```  
+
+in the above, process `convertToUpper` is executed parallel. No way to figure out which chunk (HELLO or WORLD) will be executed first.  
+
+You can change one process and ru-run it by;
+```
+nextflow run tutorial.nf -resume
+```  
+
+where the first process is skiped and procss 2 will run its course.  
+
+ 
+
 
