@@ -14,7 +14,7 @@ They can communicate via asynchronous FIFO queues, called **Channels**
 Process can have 1 or more channels as input and output. 
 Interaction between these are defined by the pipeline execution flow itself.  
 
-### Channels
+### Channels [link](https://www.nextflow.io/docs/latest/channel.html#channel-page)
 2 types of channels: queue channel & value channel  
 
 #### Queue channel  
