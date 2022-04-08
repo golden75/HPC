@@ -19,8 +19,8 @@ Interaction between these are defined by the pipeline execution flow itself.
 
 #### Queue channel  
 *  unidirectional FIFO queue, which connects two process or operators.  
-*  created using factory methods such as : from, fromPath, etc .. or chaining it with channel operator such as map, flatMap etc..  
-*  also created by process output declarations using into clause.  
+*  created using factory methods such as : `from`, `fromPath`, `etc` .. or chaining it with channel operator such as `map`, `flatMap` etc..  
+*  also created by process output declarations using `into` clause.  
 
 
 
