@@ -19,3 +19,7 @@ nextflow is based on groovy and a crash course on groovy language:
 [https://github.uconn.edu/frz02001/groovy_tutorial.git](https://github.uconn.edu/frz02001/groovy_tutorial.git)
 
 
+Contents  
+1. [Getting started : Documentation](nextflow_01_start.md)  
+2. [Basic concepts : Documentation](nextflow_02_basic_concepts.md)  
+
