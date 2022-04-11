@@ -17,7 +17,7 @@ Interaction between these are defined by the pipeline execution flow itself.
 ### Channels [link](https://www.nextflow.io/docs/latest/channel.html#channel-page)
 2 types of channels: queue channel & value channel  
 
-#### Queue channel  
+### Queue channel  
 *  unidirectional FIFO queue, which connects two process or operators.  
 *  created using factory methods such as : `from`, `fromPath`, `etc` .. or chaining it with channel operator such as `map`, `flatMap` etc..  
 
@@ -77,5 +77,40 @@ bar.view{ "Bar emit:" +it }
 
 
 
+
+### Value channel  
+created using value factory methods or by operators returning single value.  
+eg: `first`, `last`, `collect`, `count`, `min`, `max`, `reduce`, `sum`   
+
+``` 
+process foo {
+  input:
+  val x from 1
+  output:
+  file 'x.txt' into result
+
+  """
+  echo $x > x.txt
+  """
+}
+```
+
+single input created inplicitly is a value channel.  
+Also the `result` output is a value channel, and can be read by more than one process.   
+
+
+
+### Channel factory  
+channels may be created implicitly by process output(s) declaration or explicitly by following channel factory methods.   
+
+*  `create`
+*  `empty`  
+*  `from`  
+*  `fromPath`  
+*  `fromFilePairs`  
+*  `fromSRA`  
+*  `of`  
+*  `value`  
+*  `watchPath`  
 
 
