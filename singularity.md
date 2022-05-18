@@ -52,6 +52,8 @@ In the above main program is humann so it can be called using that.
 
 ## Pulling using a singulariy image  
 
+[souporcell](https://github.com/wheaton5/souporcell)  
+
 ```
 module load singularity/3.9.2 
 singularity pull shub://wheaton5/souporcell 
