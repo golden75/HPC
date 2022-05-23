@@ -1,7 +1,11 @@
 ## Basic concepts  
 Nextflow is a reactive workflow framework and a programming DSL (Domain Speific Language), that enables writing intensive computational pipelines.  
 It is based on dataflow programming model.  
-: which means it communicate through channels. 
+: which means it communicate through channels.   
+
+Contents  
+*   [Processes and Channels](#processes-and-channels)  
+*   [Execution abstraction]()
 
 
 ## Processes and Channels  
@@ -113,4 +117,30 @@ channels may be created implicitly by process output(s) declaration or explicitl
 *  `value`  
 *  `watchPath`  
 
+
+## Execution abstraction  
+
+Process defines what command/script to be executed.  
+Executor determines how that the script is actually run on the target system.  
+My defining the targe execution platform in the configuration file, the pipeline can be run on local computer, grid platform or the cloud.  
+
+## Scripting language  
+Nextflow scripting is an extenstion of the Groovy. (Groovy is a superset of Java).  To lean [nexflow scripting](https://www.nextflow.io/docs/latest/script.html#script-page) :  
+
+
+
+## Configuration options  
+Pipeline configuration options are defined in the `nexflow.config` file, which is placed in the executiion directory.  
+
+This file contains:  
+*  which executor to use 
+*  processes enviornment varialbes
+*  pipeline parameters   
+
+``` 
+process {
+  executor='sge'
+  queue = 'cn-el6'
+}
+```  
 
