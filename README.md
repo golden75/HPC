@@ -22,7 +22,7 @@ nextflow is based on groovy and a crash course on groovy language:
 Contents  
 1. [Getting started : Documentation](nextflow_01_start.md)  
 2. [Basic concepts : Documentation](nextflow_02_basic_concepts.md)   
-3. [Next flow scripting : Documentation](nextflow_03_nextflow_scripting.md)  
+3. [Nextflow scripting : Documentation](nextflow_03_nextflow_scripting.md)  
 
 
 ## Containers   
