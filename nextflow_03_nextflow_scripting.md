@@ -6,7 +6,7 @@ module load java/12.0.1
 export PATH=$PATH:"path-to-groovy-4.0.2/bin" 
 ```  
 
-Once groovy is installed properly, and interactive groovy shell can be produced, to type commands interactivly using:  
+Once groovy is installed properly, and interactive [groovy shell](https://groovy-lang.org/groovysh.html)  can be produced, to type commands interactivly using:  
 ```
 groovysh   
 ```  
