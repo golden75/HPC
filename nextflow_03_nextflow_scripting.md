@@ -3,7 +3,7 @@ nexflow documents: [https://www.nextflow.io/docs/latest/script.html](https://www
 
 Contents   
 1.  [Language basics](#language-basics)  
-2.  [Implicit variables](#inplicit-varialbes)  
+2.  [Implicit variables](#implicit-variables)  
 3.  [Regular expressions](#regular-expressions)  
 4.  [Files and IO](#files-and-io)  
 
