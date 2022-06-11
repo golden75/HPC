@@ -134,7 +134,15 @@ following variables are implicitly defined in the script global execulation scop
 
 | **Name**   |  **Description**  |   
 | :-----  | :-----  |  
-|  baseDir  |  The directory where the main workflow script is located  |  
+|  baseDir  |  The directory where the main workflow script is located  |  lanuchDir  |  The directory where the workflow is run   |  
+|  moduleDir  |  Directory where a module script is located   |  
+|  nextflow   |  Dictionary like object representing nextflow runtime information   |  
+|  params     |  Dictionary like object holding workflow parameters specifing in the config file or as command line options.   |   
+|  projectDir  |  The directory where the main script is located   |   
+|  workDir     |  directory where tasks temporary files are created  |   
+|  workflow    |  Dictionary like object representing workflow runtime information   |   
+
+
 
 
 
