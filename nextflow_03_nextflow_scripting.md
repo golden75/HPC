@@ -1,4 +1,13 @@
 # Nextflow Scripting   
+nexflow documents: [https://www.nextflow.io/docs/latest/script.html](https://www.nextflow.io/docs/latest/script.html)   
+
+Contents   
+1.  [Language basics](language-basics)  
+2.  [Implicit variables](inplicit-varialbes)  
+3.  [Regular expressions](regular-expressions)  
+4.  [Files and IO](files-and-io)  
+
+
 Nextflow scripting is an extension of Groovy programing language.  
 You can install groovy binary and include the path to the bin.  
 ``` 
@@ -12,7 +21,7 @@ groovysh
 ```  
 
 
-## Language basics  
+# Language basics   
 ```
 println "Hello, World!"  
 ```  
@@ -68,7 +77,7 @@ An array or a list object can used to assign to multiple variables at once:
 a, b, c) = [10, 20, 'foo']
 ```
 
-## Conditional Execution   
+### Conditional Execution   
 ``` 
 x = Math.random()
 if( x < 0.5 ) {
@@ -78,5 +87,55 @@ else {
     println "You won!"
 }
 ```  
+
+
+### Strings  
+Strings can be defined by ' or "" characters.
+```
+a = "wold" 
+print "hello " + a + "\n" 
+```
+
+Double-quoated strings support variable interpolations.  ${expression}  
+```
+oxtype = 'quick'
+foxcolor = ['b', 'r', 'o', 'w', 'n']
+println "The $foxtype ${foxcolor.join()} fox"
+
+The quick brown fox
+```  
+
+### Multi-line strings  
+```
+text = """
+    hello there James
+    how are you today?
+    """
+```  
+
+As in Bash/shell scripts, terminating a line in a multi-line string with a `\` character prevents a new line character from separation.  
+
+```
+myLongCmdline = """
+    blastp \
+    -in $input_query \
+    -out $output_file \
+    -db $blast_database \
+    -html
+    """
+
+result = myLongCmdline.execute().text
+```  
+
+# Implicit variables   
+
+## Script implicit variables 
+following variables are implicitly defined in the script global execulation scope.   
+
+| **Name**   |  **Description**  |   
+| :-----  | :-----  |  
+|  baseDir  |  The directory where the main workflow script is located  |  
+
+
 
 
