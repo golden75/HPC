@@ -2,10 +2,10 @@
 nexflow documents: [https://www.nextflow.io/docs/latest/script.html](https://www.nextflow.io/docs/latest/script.html)   
 
 Contents   
-1.  [Language basics](language-basics)  
-2.  [Implicit variables](inplicit-varialbes)  
-3.  [Regular expressions](regular-expressions)  
-4.  [Files and IO](files-and-io)  
+1.  [Language basics](#language-basics)  
+2.  [Implicit variables](#inplicit-varialbes)  
+3.  [Regular expressions](#regular-expressions)  
+4.  [Files and IO](#files-and-io)  
 
 
 Nextflow scripting is an extension of Groovy programing language.  
