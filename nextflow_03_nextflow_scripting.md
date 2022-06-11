@@ -143,7 +143,41 @@ following variables are implicitly defined in the script global execulation scop
 |  workflow    |  Dictionary like object representing workflow runtime information   |   
 
 
+##  Configuration implicit variables  
+The following variables are implicitly defined in the Nextflow configuration file:  
+
+| **Name**   |  **Description**   |   
+| :-----  | :-----   |   
+|  baseDir  |  The directory where the main workflow script is located  |  
+|  lauchDir  |  The directory where the workflow is run  |   
+|  projectDir  |  The directory where the main script is located   |   
 
 
+##  Process implicit variables    
+The following variables are implicitly defined in the `task` object of each process.   
+
+| **Name**   |  **Description**    |   
+| :-----  | :-----   |  
+|  attempt  |  The current task attempt   |  
+|  hash  |  The task unique hash Id  |   
+|  index  |  The task index (corresponds to task_id in the execution trace)  |   
+|  process  |  The current process name   |   
+|  workDir  |  The task unique directory. NOTE: This is only available for processes that run native code via the exec: statement.   |   
+
+
+The `task` object also contains the values of all process directives for a given taks, which allows you to access these settings at runtime.   
+e.g:  
+```   
+process foo {
+  script:
+  """
+  some_tool --cpus $task.cpus --mem $task.memory
+  """
+}
+```  
+
+In the above snippet the task.cpus report the value for the cpus directive and the task.memory the current value for memory directive depending on the actual setting given in the workflow configuration file.   
+
+(more information on **Process directives** topic)   
 
 
