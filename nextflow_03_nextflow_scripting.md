@@ -282,3 +282,238 @@ assert ('Line contains 20 characters' - ~/\d+\s+/) == 'Line contains characters'
 ```  
 
 
+# Files and I/O  
+file method returns a file system object, given a file path string  
+```
+myFile = file('some/path/to/my_file.file')
+```   
+
+When you use wildcard characters, `*`, `?`, `[]`, `{}` it returns a list object holding paths of files or empty list.  
+```  
+listOfFiles = file('some/path/*.fa')
+```  
+
+Two asterisks `**` also search subdirectories.   
+
+To find hidden files:
+```
+listWithHidden = file('some/path/*.fa', hidden: true)
+```  
+
+`file` options :  
+| **Name**   |  **Description**   |  
+| :-----  | :-----  |  
+| glob  |  When true interprets characters *, ?, [] and {} as glob wildcards, otherwise handles them as normal characters (default: true)  |  
+|  type  |  Type of paths returned, either file, dir or any (default: file)  |  
+|  hidden  |  When true includes hidden files in the resulting paths (default: false)  |  
+|  maxDepth  |  Maximum number of directory levels to visit (default: no limit)  |  
+| followLinks  |   When true follows symbolic links during directory tree traversal, otherwise treats them as files (default: true)  |  
+|  checkIfExists  |  When true throws an exception of the specified path do not exist in the file system (default: false)  |  
+
+See also: [Channel.fromPath](https://www.nextflow.io/docs/latest/channel.html#channel-path).  
+
+
+## Basic read/write  
+*  reading a file is as easy as getting the value of the file’s text property, which returns the file content as a string value:  
+```
+print myFile.text
+```  
+
+*  save a string value to a file by simply assigning it to the file’s text property:  
+```
+myFile.text = 'Hello world!'
+```   
+
+*  to append a string value to a file without erasing existing content :  
+```
+myFile.append('Add this line\n') 
+```  
+
+*  Or use the left shift operator, a more idiomatic way to append text content to a file:
+``` 
+myFile << 'Add a line more\n'  
+```  
+
+##  Read a file line by line  
+Dont use the below to read big files:  
+```
+myFile = file('some/my_file.txt')
+allLines = myFile.readLines()
+for( line : allLines ) {
+    println line
+}
+``` 
+
+For Big files, use method `eachLine`  
+``` 
+count = 0
+myFile.eachLine { str ->
+    println "line ${count++}: $str"
+} 
+```  
+
+## Advanced file reading operations  
+The classes `Reader` and `InputStream` provide fine control for reading text and binary files, respectively.  
+
+```
+myReader = myFile.newReader()
+String line
+while( line = myReader.readLine() ) {
+    println line
+}
+myReader.close()
+```  
+
+The methods newInputStream and withInputStream work similarly. The main difference is that they create an InputStream object useful for writing binary data.  
+
+## Advanced file writing operations  
+The Writer and OutputStream classes provide fine control for writing text and binary files.  
+
+For example, given two file objects sourceFile and targetFile, the following code copies the first file’s content into the second file, replacing all U characters with X:  
+```
+sourceFile.withReader { source ->
+    targetFile.withWriter { target ->
+        String line
+        while( line=source.readLine() ) {
+            target << line.replaceAll('U','X')
+        }
+    }
+}
+```  
+
+Read the Java documentation for the Writer, PrintWriter and OutputStream classes to learn more about methods available for writing data to files.   
+
+
+## List directory content  
+```
+myDir = file('any/path')
+```  
+
+The simplest way to get a directory list is by using the methods list or listFiles  
+```
+allFiles = myDir.list()
+for( def file : allFiles ) {
+    println file
+}
+```
+
+## Create directories  
+Given a file variable representing a nonexistent directory, like the following:  
+```
+myDir = file('any/path')
+```
+
+the method mkdir creates a directory at the given path, returning true if the directory is created successfully, and false otherwise:  
+
+```
+result = myDir.mkdir()
+println result ? "OK" : "Cannot create directory: $myDir"
+```
+
+The method mkdirs creates the directory named by the file object, including any nonexistent parent directories:  
+```
+myDir.mkdirs()
+```  
+
+## Create links  
+Given a file, the method mklink creates a file system link for that file using the path specified as a parameter:
+```
+myFile = file('/some/path/file.txt')
+myFile.mklink('/user/name/link-to-file.txt')
+```  
+
+## Copy files  
+The method copyTo copies a file into a new file or into a directory, or copies a directory to a new directory:  
+```
+myFile.copyTo('new_name.txt')
+```  
+
+When the source file is a directory, all its content is copied to the target directory:  
+```
+myDir = file('/some/path')
+myDir.copyTo('/some/new/path')
+```  
+
+## Move files  
+You can move a file by using the method moveTo:  
+```
+myFile = file('/some/path/file.txt')
+myFile.moveTo('/another/path/new_file.txt')
+```  
+
+## Rename files  
+```
+myFile = file('my_file.txt')
+myFile.renameTo('new_file_name.txt')
+```  
+
+## Delete files  
+```
+myFile = file('some/file.txt')
+result = myFile.delete()
+println result ? "OK" : "Cannot delete: $myFile"
+```
+
+Delete directory and subdirectory use method `deleteDir`  
+
+## Check file attributes  
+The following methods can be used on a file variable created by using the `file` method:  
+
+| **Name**   |  **Description**    |  
+| :-----  | :-----   |  
+|  getName  |  Gets the file name e.g. /some/path/file.txt -> file.txt  |  
+|  getBaseName  |  Gets the file name without its extension e.g. /some/path/file.tar.gz -> file.tar  |  
+|  getSimpleName  |  Gets the file name without any extension e.g. /some/path/file.tar.gz -> file  |  
+|  getExtension  |  Gets the file extension e.g. /some/path/file.txt -> txt  |  
+|  getParent  |  Gets the file parent path e.g. /some/path/file.txt -> /some/path  |  
+|  size  |  Gets the file size in bytes  |  
+
+
+For example, the following line prints a file name and size:  
+```
+println "File ${myFile.getName() size: ${myFile.size()}"
+```  
+
+## Get and modify file permissions  
+getPermissions returns a 9-character string representing the file’s permissions using the Linux symbolic notation e.g. rw-rw-r--:  
+```
+permissions = myFile.getPermissions()
+```  
+
+Similarly, the method setPermissions sets the file’s permissions using the same notation  
+```
+myFile.setPermissions('rwxr-xr-x')
+```  
+
+A second version of the setPermissions method sets a file’s permissions given three digits representing, respectively, the owner, group and other permissions:  
+```
+myFile.setPermissions(7,5,5)
+```
+
+## HTTP/FTP files  
+Nextflow provides transparent integration of HTTP/S and FTP protocols for handling remote resources as local file system objects. Simply specify the resource URL as the argument of the file object:  
+```
+pdb = file('http://files.rcsb.org/header/5FID.pdb')
+```  
+
+## Counting records  
+### countLines  
+The countLines methods counts the lines in a text files.  
+```
+def sample = file('/data/sample.txt')
+println sample.countLines()
+```
+
+### countFasta  
+The countFasta method counts the number of records in FASTA formatted file.  
+```
+def sample = file('/data/sample.fasta')
+println sample.countFasta()
+```  
+
+### countFastq  
+```
+def sample = file('/data/sample.fastq')
+println sample.countFastq()
+``` 
+
