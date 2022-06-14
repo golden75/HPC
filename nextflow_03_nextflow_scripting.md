@@ -4,7 +4,7 @@ nexflow documents: [https://www.nextflow.io/docs/latest/script.html](https://www
 Contents   
 1.  [Language basics](#language-basics)  
 2.  [Implicit variables](#implicit-variables)   
-3.  [Closures]()
+3.  [Closures](#closures)
 4.  [Regular expressions](#regular-expressions)  
 5.  [Files and IO](#files-and-io)  
 
