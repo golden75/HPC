@@ -3,9 +3,10 @@ nexflow documents: [https://www.nextflow.io/docs/latest/script.html](https://www
 
 Contents   
 1.  [Language basics](#language-basics)  
-2.  [Implicit variables](#implicit-variables)  
-3.  [Regular expressions](#regular-expressions)  
-4.  [Files and IO](#files-and-io)  
+2.  [Implicit variables](#implicit-variables)   
+3.  [Closures]()
+4.  [Regular expressions](#regular-expressions)  
+5.  [Files and IO](#files-and-io)  
 
 
 Nextflow scripting is an extension of Groovy programing language.  
@@ -179,5 +180,105 @@ process foo {
 In the above snippet the task.cpus report the value for the cpus directive and the task.memory the current value for memory directive depending on the actual setting given in the workflow configuration file.   
 
 (more information on **Process directives** topic)   
+
+
+# Closures  
+
+Briefly, a closure is a block of code that can be passed as an argument to a function. Thus, you can define a chunk of code and then pass it around as if it were a string or an integer.  
+
+More formally, you can create functions that are defined as first class objects.   
+
+```  
+square = { it * it }  
+```   
+The curly brackets around the expression t tells the script interpreter to treat this expression as code.    
+```  
+println square(9)  
+```    
+
+This is not very interesting until we find that we can pass the function square as an argument to other functions or methods  
+```
+[ 1, 2, 3, 4 ].collect(square)  
+
+[ 1, 4, 9, 16 ]  
+```  
+
+
+# Regular expressions  
+Regular expressions are available via the `~/pattern/` syntax and the `=~` and `==~` operators.   
+
+Use =~ to check whether a given pattern occurs anywhere in a string: 
+```
+assert 'foo' =~ /foo/       // return TRUE
+assert 'foobar' =~ /foo/    // return TRUE
+```   
+
+Use ==~ to check whether a string matches a given regular expression pattern exactly.  
+```
+assert 'foo' ==~ /foo/       // return TRUE
+assert 'foobar' ==~ /foo/    // return FALSE
+```  
+
+*  The ~ operator creates a Java Pattern object from the given string.   
+``` 
+x = ~/abc/
+println x.class
+// prints java.util.regex.Pattern
+```  
+*  The =~ operator creates a Java Matcher object.
+
+``` 
+y = 'some string' =~ /abc/
+println y.class
+// prints java.util.regex.Matcher 
+```  
+
+Java’s regular expression language : [Pattern Java Doc](https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html).  
+
+## String replacement  
+```
+x = "colour".replaceFirst(/ou/, "o")
+println x
+// prints: color
+
+y = "cheesecheese".replaceAll(/cheese/, "nice")
+println y
+// prints: nicenice
+```  
+
+## Capturing groups  
+First create a matcher object with the =~ operator. Then, you can index the matcher object to find the matches:  
+```
+programVersion = '2.7.3-beta'
+m = programVersion =~ /(\d+)\.(\d+)\.(\d+)-?(.+)/
+
+assert m[0] ==  ['2.7.3-beta', '2', '7', '3', 'beta']
+assert m[0][1] == '2'
+assert m[0][2] == '7'
+assert m[0][3] == '3'
+assert m[0][4] == 'beta'
+```  
+
+## Removing part of a string  
+You can remove part of a String value using a regular expression pattern. The first match found is replaced with an empty String:  
+
+``` 
+// define the regexp pattern
+wordStartsWithGr = ~/(?i)\s+Gr\w+/
+
+// apply and verify the result
+('Hello Groovy world!' - wordStartsWithGr) == 'Hello world!'
+('Hi Grails users' - wordStartsWithGr) == 'Hi users'
+```  
+
+Remove the first 5-character word from a string:  
+```  
+assert ('Remove first match of 5 letter word' - ~/\b\w{5}\b/) == 'Remove  match of 5 letter word'
+```  
+
+Remove the first number with its trailing whitespace from a string:  
+```
+assert ('Line contains 20 characters' - ~/\d+\s+/) == 'Line contains characters'
+```  
 
 
