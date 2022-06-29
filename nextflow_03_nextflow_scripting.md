@@ -355,6 +355,8 @@ myFile.eachLine { str ->
 ## Advanced file reading operations  
 The classes `Reader` and `InputStream` provide fine control for reading text and binary files, respectively.  
 
+The method `newReader` creates a `Reader` **object** for the given file that allows you to read the content as single characters, lines or arrays of characters 
+
 ```
 myReader = myFile.newReader()
 String line
@@ -363,6 +365,18 @@ while( line = myReader.readLine() ) {
 }
 myReader.close()
 ```  
+
+The method `withReader` works similarly, but automatically calls the close method for you when you have finished processing the file. So, the previous example can be written more simply as  
+```
+myFile.withReader {
+    String line
+    while( line = it.readLine() ) {
+        println line
+    }
+}
+```  
+
+
 
 The methods newInputStream and withInputStream work similarly. The main difference is that they create an InputStream object useful for writing binary data.  
 
