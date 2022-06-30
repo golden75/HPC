@@ -76,5 +76,64 @@ rocess doOtherThings {
 
 ### Scripts à la carte  
 
+Process script is interpreted as `bash` in *nextflow* in default. But you can use other languages as well. This can be done is the corresponding sheband declaration:   
 
+  
+```
+process perlStuff {
+    """
+    #!/usr/bin/perl
+
+    print 'Hi there!' . '\n';
+    """
+}
+
+process pythonStuff {
+    """
+    #!/usr/bin/python
+
+    x = 'Hello'
+    y = 'world!'
+    print "%s - %s" % (x,y)
+    """
+}
+```   
+
+**NOTE:**
+> Since the actual location of the interpreter binary file can differ across platforms, it is wise to use the env command followed by the interpreter name, e.g. #!/usr/bin/env perl, instead of the absolute path, in order to make your script more portable.  
+
+
+### Conditional scripts  
+Complex scripts can use the control statements like: `if`, `switch` etc..  
+
+Process scripts can contain conditional statements by simply prefixing the script block with the keyword `script:`. The interpreter will then evaluate all the following statements as a code block, which will return, what will be executed.   
+
+```
+seq_to_align = ...
+mode = 'tcoffee'
+
+process align {
+    input:
+    file seq_to_aln from sequences
+
+    script:
+    if( mode == 'tcoffee' )
+        """
+        t_coffee -in $seq_to_aln > out_file
+        """
+
+    else if( mode == 'mafft' )
+        """
+        mafft --anysymbol --parttree --quiet $seq_to_aln > out_file
+        """
+
+    else if( mode == 'clustalo' )
+        """
+        clustalo -i $seq_to_aln -o out_file
+        """
+
+    else
+        error "Invalid alignment mode: ${mode}"
+}
+```   
 
