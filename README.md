@@ -23,6 +23,7 @@ Contents
 1. [Getting started : Documentation](nextflow_01_start.md)  
 2. [Basic concepts : Documentation](nextflow_02_basic_concepts.md)   
 3. [Nextflow scripting : Documentation](nextflow_03_nextflow_scripting.md)  
+4. [Nextflow processes: Documentation](nextflow_04_nextflow_processes.md)
 
 
 ## Containers   
