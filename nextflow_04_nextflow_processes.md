@@ -176,3 +176,29 @@ process myTask {
 }
 ```  
 
+### Native execution  
+Nextflow processes can execute native code other than system scripts as shown in the previous paragraphs.
+
+This means that instead of specifying the process command to be executed as a string script, you can define it by providing one or more language statements, as you would do in the rest of the pipeline script. Simply starting the script definition block with the exec: keyword, for example:  
+
+```
+x = Channel.from( 'a', 'b', 'c')
+
+process simpleSum {
+    input:
+    val x
+
+    exec:
+    println "Hello Mr. $x"
+}
+
+```  
+
+will display:
+```
+Hello Mr. b
+Hello Mr. a
+Hello Mr. c
+```
+
+
