@@ -47,7 +47,8 @@ Content:
    *  [Conditional scripts](#conditional-scripts)
    *  [Template](#template)
    *  [Shell](#shell)
-   *  [Native execution](#native-execution)
+   *  [Native execution](#native-execution)  
+*  [Stub](#stub)
 
 ## Script  
 `script` block is a string statement, that defines the command that is executed by the process to carry out its task.  
