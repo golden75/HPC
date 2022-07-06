@@ -141,3 +141,38 @@ process align {
 }
 ```   
 
+
+### Template  
+A template is simply a shell script file that Nextflow is able to execute by using the template function as shown below:  
+
+
+```
+process template_example {
+    input:
+    val STR from 'this', 'that'
+
+    script:
+    template 'my_script.sh'
+}
+```   
+
+Nextflow looks for the `my_script.sh` template file in the directory **templates/** that must exist in the same folder where the **Nextflow script** file is located (any other location can be provided by using an absolute template path).  
+
+
+### Shell  
+The shell block is a string statement that defines the shell command executed by the process to carry out its task. It is an alternative to the Script definition with an important difference, it uses the exclamation mark ! character as the variable placeholder for Nextflow variables in place of the usual dollar character.
+
+In this way it is possible to use both Nextflow and Bash variables in the same piece of code without having to escape the latter and making process scripts more readable and easy to maintain. For example:  
+
+``` 
+process myTask {
+    input:
+    val str from 'Hello', 'Hola', 'Bonjour'
+
+    shell:
+    '''
+    echo User $USER says !{str}
+    '''
+}
+```  
+
