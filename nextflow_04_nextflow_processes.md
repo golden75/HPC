@@ -237,3 +237,21 @@ This feature is meant to allow the fast prototyping and test of the workflow log
 >**NOTE**  
 >The stub block can be defined before or after the `script` block. When the pipeline is executed with the `-stub-run` option and a process’s stub is not defined, the *script block* is executed.  
 
+
+
+## Inputs   
+
+Processes are isolated and they communicate though channels sending values.  
+
+The `input` block defines from which channels the process expects to receive data.  
+
+```
+input:
+  <input qualifier> <input name> [from <source channel>] [attributes]
+
+```  
+
+The input qualifier declares the type of data to be received.  
+eg: `val, env, file, path, stdin, tuple, each`  
+
+
